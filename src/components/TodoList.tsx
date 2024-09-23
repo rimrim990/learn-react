@@ -1,6 +1,6 @@
 import type {Data} from "./types";
 import Todo from './Todo'
-import React from "react";
+import React, {useState} from "react";
 
 const datas: Data[] = [
     {
@@ -25,12 +25,18 @@ const datas: Data[] = [
 ]
 
 export default function TodoList() {
+    const [todos, setTodos] = useState(datas)
+
+    const handleDelete = (id: number) => {
+        setTodos(t => t.filter(todo => todo.id !== id))
+    }
+
     return (
         <>
             <h1>Roseanne's Todo</h1>
             <ul>
                 {
-                    datas.map(data => <Todo data={data} key={data.id}/>)
+                    todos.map(todo => <Todo data={todo} handleDelete={() => handleDelete(todo.id)} key={todo.id}/>)
                 }
             </ul>
         </>
