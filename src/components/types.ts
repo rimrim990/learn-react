@@ -5,3 +5,5 @@ export interface Data {
     createdAt: Date;
     finishedAt?: Date;
 }
+
+export type DataInput = Pick<Data, 'title' | 'content'>
