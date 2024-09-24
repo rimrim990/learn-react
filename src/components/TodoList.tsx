@@ -1,8 +1,9 @@
 import type {Data, DataInput} from "./types";
 import Todo from './Todo'
-import React, {useState} from "react";
+import React, {useReducer, useState} from "react";
 import {EditTodo} from "./EditTodo";
 import AddTodo from "./AddTodo";
+import todoReducer from "../action/reducer";
 
 let nextId = 0;
 
@@ -29,7 +30,7 @@ const datas: Data[] = [
 ]
 
 export default function TodoList() {
-    const [todos, setTodos] = useState(datas)
+    const [todos, dispatch] = useReducer(todoReducer, datas)
     const [selectedId, setSelectedId] = useState<number>(datas[0].id)
 
     const handleSelect = (id: number) => {
@@ -37,40 +38,36 @@ export default function TodoList() {
     }
 
     const handleAdd = (data: DataInput) => {
-        setTodos(t => [...t, {
+        dispatch({
+            type: 'add',
             id: nextId++,
-            title: data.title,
-            content: data.content,
-            createdAt: new Date()
-        }])
+            data: {
+                title: data.title,
+                content: data.content,
+            }
+        })
     }
 
     const handleDelete = (id: number) => {
-        setTodos(t => t.filter(todo => todo.id !== id))
+        dispatch({
+            type: 'delete',
+            id
+        })
     }
 
     const handleUpdate = (id: number) => (update: DataInput) => {
-        setTodos(t => t.map(todo => {
-            if (todo.id === id)
-                return {
-                    ...todo,
-                    ...update,
-                }
-
-            return todo;
-        }))
+        dispatch({
+            type: 'update',
+            id,
+            data: update
+        })
     }
 
     const handleToggle = (id: number) => {
-        setTodos(t => t.map(todo => {
-            if (todo.id === id)
-                return {
-                    ...todo,
-                    finishedAt: todo.finishedAt ? undefined : new Date()
-                }
-
-            return todo;
-        }))
+        dispatch({
+            type: 'toggle',
+            id,
+        })
     }
 
     return (
