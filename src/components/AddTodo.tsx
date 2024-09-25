@@ -1,16 +1,14 @@
 import {DataInput} from "./types";
 import React, {ChangeEventHandler, MouseEventHandler, useState} from "react";
+import {getNextId, useTodosDispatch} from "../context/TodosContext";
 
-interface Props {
-    handleAdd: (data: DataInput) => void
-}
+export default function AddTodo() {
+    const dispatch = useTodosDispatch()
 
-export default function AddTodo({handleAdd}: Props) {
     const [input, setInput] = useState<DataInput>({
         title: '',
         content: ''
     })
-
     const {title, content} = input;
 
     const handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = e => {
@@ -23,7 +21,14 @@ export default function AddTodo({handleAdd}: Props) {
 
     const handleSubmit: MouseEventHandler<HTMLButtonElement> = e => {
         e.preventDefault()
-        handleAdd(input)
+        dispatch({
+            type: 'add',
+            id: getNextId(),
+            data: {
+                title,
+                content
+            }
+        })
     }
 
     return (

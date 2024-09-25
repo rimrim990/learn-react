@@ -2,7 +2,7 @@ import {Data, DataInput} from "../components/types";
 
 type ActionType = 'add' | 'delete' | 'update' | 'toggle'
 
-type Action = {
+export type Action = {
     type: ActionType;
     id: number;
     data?: DataInput
