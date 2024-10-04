@@ -17,7 +17,7 @@ export default function TodoList() {
     return (
         <div style={{display: 'flex'}}>
             <div>
-                <h1>Roseanne's Todo</h1>
+                <h2>Roseanne's Todo</h2>
                 <ul>
                     {
                         todos.map(todo => <Todo

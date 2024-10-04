@@ -35,7 +35,7 @@ export function EditTodo({data}: Props) {
 
     return (
         <div>
-            <h1>Edit Todo</h1>
+            <h2>Edit Todo</h2>
             <form>
                 <ul>
                     <li>
