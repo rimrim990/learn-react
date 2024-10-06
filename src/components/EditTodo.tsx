@@ -3,15 +3,15 @@ import type {Data, DataInput} from "./types";
 import {useTodosDispatch} from "../context/TodosContext";
 
 interface Props {
-    data: Data
+    data?: Data
 }
 
 export function EditTodo({data}: Props) {
     const dispatch = useTodosDispatch()
 
     const [input, setInput] = useState<DataInput>({
-        title: data.title || '',
-        content: data.content || ''
+        title: data?.title || '',
+        content: data?.content || ''
     })
 
     const {title, content} = input;
@@ -26,11 +26,13 @@ export function EditTodo({data}: Props) {
 
     const handleSubmit: MouseEventHandler<HTMLButtonElement> = e => {
         e.preventDefault()
-        dispatch({
-            type: 'update',
-            id: data.id,
-            data: input
-        })
+
+        if (data)
+            dispatch({
+                type: 'update',
+                id: data.id,
+                data: input
+            })
     }
 
     return (

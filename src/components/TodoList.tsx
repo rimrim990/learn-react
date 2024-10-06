@@ -6,7 +6,7 @@ import {useTodos} from "../context/TodosContext";
 
 export default function TodoList() {
     const todos = useTodos()
-    const [selectedId, setSelectedId] = useState<number>(todos[0].id)
+    const [selectedId, setSelectedId] = useState<number | undefined>(todos[0]?.id)
 
     const handleSelect = (id: number) => {
         setSelectedId(id)
@@ -30,7 +30,7 @@ export default function TodoList() {
                 </ul>
             </div>
             <div>
-                <EditTodo key={selectedId} data={selectedTodo}/>
+                <EditTodo key={selectedTodo?.id} data={selectedTodo}/>
                 <AddTodo/>
             </div>
         </div>
